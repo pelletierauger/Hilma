@@ -19,7 +19,7 @@ function draw() {
     translate(0, frameCount);
 
     // beginShape();
-    // rotate(frameCount / 200);
+
     for (var i = 0; i < 10; i += 0.12) {
         var x = i - 5;
         var y = -(1 / sqrt(TWO_PI)) * pow(2.71828, -pow(x, 2) / 2);
@@ -31,7 +31,14 @@ function draw() {
         // console.log(y);
         // x = map(x, -5, 5, -width / 2 + 20, width / 2 - 20);
         var n2 = noise(frameCount / 50);
-        x *= 5 * n2;
+        var n3 = noise(100 + frameCount / 50);
+        var lineWidth = 3;
+        x *= lineWidth;
+        if (x <= 0) {
+            x *= n2;
+        } else {
+            x *= n3;
+        }
         var mapCrayon = map(y, -200, 0, 0, 250);
         mapCrayon = constrain(mapCrayon, 0, 250);
         // console.log(mapCrayon);
@@ -40,7 +47,7 @@ function draw() {
         // fill((round(mapCrayon) + rando) * 2);
         // if (random(2) < 1) {
         push();
-        var nGrain = noise(frameCount) * 10;
+        var nGrain = noise(frameCount) * lineWidth * 2;
         translate(random(nGrain), random(nGrain));
         ellipse(x, 0, 2);
         pop();
