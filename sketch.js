@@ -23,7 +23,7 @@ function draw() {
     for (var i = 0; i < 10; i += 0.12) {
         var x = i - 5;
         var y = -(1 / sqrt(TWO_PI)) * pow(2.71828, -pow(x, 2) / 2);
-        var noiseValue = i + frameCount / 10;
+        var noiseValue = i + frameCount / 100;
         var n = noise(noiseValue) / 200;
         n += noise(noiseValue) * 2 * y;
         y += n;
@@ -32,7 +32,7 @@ function draw() {
         // x = map(x, -5, 5, -width / 2 + 20, width / 2 - 20);
         var n2 = noise(frameCount / 50);
         var n3 = noise(100 + frameCount / 50);
-        var lineWidth = 3;
+        var lineWidth = 10;
         x *= lineWidth;
         if (x <= 0) {
             x *= n2;
@@ -47,7 +47,7 @@ function draw() {
         // fill((round(mapCrayon) + rando) * 2);
         // if (random(2) < 1) {
         push();
-        var nGrain = noise(frameCount) * lineWidth * 2;
+        var nGrain = noise(frameCount) * lineWidth * 1;
         translate(random(nGrain), random(nGrain));
         ellipse(x, 0, 2);
         pop();
