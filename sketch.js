@@ -9,6 +9,7 @@ function setup() {
     noStroke();
     frameRate(30);
     // noLoop();
+    blendMode(DARKEST);
 }
 
 function draw() {
