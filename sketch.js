@@ -1,6 +1,8 @@
 var looping = true;
 var exporting = false;
 var arr = [];
+var radiusAugmenter = 0;
+var graphiteWeight = 1;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -9,7 +11,7 @@ function setup() {
     // stroke(255);
     noStroke();
     // stroke(0, 30);
-    frameRate(30);
+    frameRate(1);
     // arr = [createVector(0, 0),
     //     createVector(10, 10),
     //     createVector(30, 30),
@@ -17,27 +19,31 @@ function setup() {
     //     createVector(100, 20),
     //     createVector(130, 0)
     // ];
-    noLoop();
+    // noLoop();
     blendMode(DARKEST);
-    var total = 50;
+}
+
+function draw() {
+
+    translate(width / 2, height / 2);
+    var total = 100;
     var increment = TWO_PI / total;
     for (var i = 0; i < TWO_PI + increment; i += increment) {
-        var x = cos(i) * 250;
-        var y = sin(i) * 250;
+        var x = cos(i) * cos(i * 2) * (50 + radiusAugmenter);
+        var y = sin(i) * (50 + radiusAugmenter);
         var vec = createVector(x, y);
         arr.push(vec);
     }
 
-}
-
-function draw() {
-    translate(width / 2, height / 2);
     // scale(0.5, 0.5);
     // drawGraphiteBasic();
     drawGraphite(arr);
     if (exporting) {
         frameExport();
     }
+    radiusAugmenter += 50;
+    graphiteWeight += 1;
+    arr = [];
 }
 
 function drawGraphite(h) {
@@ -92,15 +98,15 @@ function drawGraphiteIsolated(t) {
         y *= 300;
         var n2 = noise(t / 50);
         var n3 = noise(100 + t / 50);
-        var lineWidth = 6;
+        var lineWidth = graphiteWeight;
         x *= lineWidth;
         if (x <= 0) {
             x *= n2;
         } else {
             x *= n3;
         }
-        var mapCrayon = map(y, -200, 0, 80, 250);
-        mapCrayon = constrain(mapCrayon, 0, 250);
+        var mapCrayon = map(y, -200, 0, 80, 255);
+        mapCrayon = constrain(mapCrayon, 0, 255);
         fill(round(mapCrayon));
         push();
         var nGrain = noise(t) * lineWidth * 1;
